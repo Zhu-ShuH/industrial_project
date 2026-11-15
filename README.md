@@ -1,67 +1,16 @@
-# industrial_project
+# Python A层标准工程模板
 
-P1.2 标准 Python 工程模板（A层）。
+在此目录执行：
 
-## 项目结构
-
-```text
-industrial_project/
-├── src/
-├── tests/
-├── config/
-├── data/
-├── docs/
-├── .github/workflows/ci.yml
-├── .pre-commit-config.yaml
-├── .flake8
-├── .gitignore
-├── pyproject.toml
-├── requirements.txt
-└── requirements-dev.txt
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements-dev.txt
+python -m pip install -e .
+python -m pre_commit install
+python -m plantops.main
+python -m pytest -q
+python -m pre_commit run --all-files
 ```
 
-## 创建虚拟环境
-
-```bash
-python -m venv venv
-```
-
-Windows：
-
-```bash
-venv\Scripts\activate
-```
-
-macOS / Linux：
-
-```bash
-source venv/bin/activate
-```
-
-## 安装依赖
-
-```bash
-pip install -r requirements.txt
-pip install -r requirements-dev.txt
-```
-
-## 运行测试
-
-```bash
-pytest -v
-```
-
-## 代码规范检查
-
-```bash
-black --check src tests
-flake8 src tests
-pylint src --fail-under=9.0
-```
-
-## pre-commit
-
-```bash
-pre-commit install
-pre-commit run --all-files
-```
+`src/tests/config/data/docs` 各司其职；CI 配置在 `.github/workflows/ci.yml`。复制到远程仓库根目录，推送后可触发 GitHub Actions。若放在总仓库的子目录，需要给工作流设置对应的 `working-directory`。

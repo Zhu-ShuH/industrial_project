@@ -1,23 +1,8 @@
-# Python
 __pycache__/
-*.py[cod]
-*.pyo
-
-# Virtual environment
-venv/
-.venv/
-
-# IDE
-.idea/
-.vscode/
-
-# System
-.DS_Store
-
-# Test / lint cache
 .pytest_cache/
-.pylint.d/
-.mypy_cache/
-
-# Data
-data/*.db
+.venv/
+.env
+*.pyc
+*.egg-info/
+build/
+dist/

@@ -1,19 +1,22 @@
-"""main 模块单元测试。"""
+"""正常记录、边界值和非法输入的回归测试。"""
 
-from src.main import main
+import pytest
 
-
-def test_main_runs():
-    """测试 main 函数能够正常执行。"""
-    assert main() is None
+from plantops import parse_reading
 
 
-def test_main_return_type():
-    """测试 main 返回值类型。"""
-    result = main()
-    assert result is None
+@pytest.mark.parametrize("value", ["0", "-273.15", "120"])
+def test_temperature_boundaries(value):
+    assert parse_reading(f"DEV-01:{value}")["temperature"] == float(value)
 
 
-def test_main_repeatable():
-    """测试 main 可以重复运行。"""
-    assert main() == main()
+@pytest.mark.parametrize(
+    "text", ["DEV-1:3", "missing_separator", "DEV-01:nan", "DEV-01:inf", "DEV-01:x"]
+)
+def test_invalid_input(text):
+    with pytest.raises(ValueError):
+        parse_reading(text)
+
+
+def test_strip_outer_whitespace():
+    assert parse_reading("  DEV-02:36.5  ")["device_id"] == "DEV-02"
